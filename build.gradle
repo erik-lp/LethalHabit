@@ -7,13 +7,21 @@ version '0.1'
 
 repositories {
     mavenCentral()
-    mavenCentral()
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'LethalHabit',
+                'Implementation-Version': version,
+                'Main-Class': 'lethalhabit.MainKt'
+    }
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 test {
