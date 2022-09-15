@@ -22,6 +22,11 @@ class CharacterController(private val character: Character) : KeyListener, Mouse
     private val isOnGround
         get() = character.position.y >= GameMap.getHeightAtX(character.position.x)
     
+    private var ability1Cooldown = 0
+    private var ability2Cooldown = 0
+    private var ability3Cooldown = 0
+    private var ability4Cooldown = 0
+    
     private var isJumping = false
     private var jumpVelocity = 0
     
@@ -56,10 +61,42 @@ class CharacterController(private val character: Character) : KeyListener, Mouse
                             dashCooldown = DASH_COOLDOWN
                         }
                     }
-                    ability1 -> println("Ability 1 used")
-                    ability2 -> println("Ability 2 used")
-                    ability3 -> println("Ability 3 used")
-                    ability4 -> println("Ability 4 used")
+                    ability1 -> {
+                        character.ability1?.let { ability ->
+                            if (ability1Cooldown <= 0 && character.slam >= ability.slam) {
+                                ability1Cooldown = ability.cooldown
+                                character.useSlam(ability.slam)
+                                ability.action()
+                            }
+                        }
+                    }
+                    ability2 -> {
+                        character.ability2?.let { ability ->
+                            if (ability2Cooldown <= 0 && character.slam >= ability.slam) {
+                                ability2Cooldown = ability.cooldown
+                                character.useSlam(ability.slam)
+                                ability.action()
+                            }
+                        }
+                    }
+                    ability3 -> {
+                        character.ability3?.let { ability ->
+                            if (ability3Cooldown <= 0 && character.slam >= ability.slam) {
+                                ability3Cooldown = ability.cooldown
+                                character.useSlam(ability.slam)
+                                ability.action()
+                            }
+                        }
+                    }
+                    ability4 -> {
+                        character.ability4?.let { ability ->
+                            if (ability4Cooldown <= 0 && character.slam >= ability.slam) {
+                                ability4Cooldown = ability.cooldown
+                                character.useSlam(ability.slam)
+                                ability.action()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -85,9 +122,16 @@ class CharacterController(private val character: Character) : KeyListener, Mouse
             }
             dashCooldown -= 1
         }
+        fun abilities() {
+            ability1Cooldown--
+            ability2Cooldown--
+            ability3Cooldown--
+            ability4Cooldown--
+        }
         handleKeyInputs()
         jumping()
         dashing()
+        abilities()
     }
     
     val texture: Image
