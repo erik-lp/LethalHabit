@@ -1,8 +1,7 @@
 package lethalhabit.game
 
+import lethalhabit.display.GamePanel
 import lethalhabit.hitbox.Hitbox
-import lethalhabit.settings.moveRight
-import lethalhabit.util.Direction
 import lethalhabit.util.Point
 import java.awt.Image
 import java.io.File
@@ -10,29 +9,37 @@ import javax.imageio.ImageIO
 
 class Character(
     override val name: String,
-    relativeHitbox: Hitbox,
+    private val relativeHitbox: Hitbox,
     override val texture: Image,
-) : Hittable, Named, Drawable {
+) : Damageable, Named, Drawable {
 
     constructor(name: String, relativeHitbox: Hitbox, texturePath: String)
             : this(name, relativeHitbox, ImageIO.read(File(texturePath)).getScaledInstance(relativeHitbox.width, relativeHitbox.height, Image.SCALE_SMOOTH))
 
-    override var position = Point(0, 0)
+    override var position = Point(100, 100)
     override var isVisible = false
     override var isBypassable = false
     
-    override val hitbox = relativeHitbox.translated(position)
-
-    override fun tick() {
-
-    }
+    var hp: Int = 100
+    var slam: Int = 100
+    
+    override val hitbox
+        get() = relativeHitbox.translated(position)
     
     fun moveBy(x: Int, y: Int) {
         position = position.translated(x, y)
     }
 
-    override fun onHit() {
-        println("Wallah mach nicht diese")
+    override fun damage(amount: Int) {
+        hp -= amount
+        if (hp <= 0) {
+            die()
+        }
+    }
+    
+    override fun die() {
+        hp = 0
+        // TODO: death screen
     }
 
 }
