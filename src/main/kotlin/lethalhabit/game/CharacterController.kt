@@ -3,10 +3,10 @@ package lethalhabit.game
 import lethalhabit.hitbox.Hitbox
 import lethalhabit.settings.*
 import lethalhabit.util.Direction
-import lethalhabit.util.GameRules.DASH_COOLDOWN
-import lethalhabit.util.GameRules.DASH_STRENGTH
-import lethalhabit.util.GameRules.JUMP_STRENGTH
-import lethalhabit.util.GameRules.WALK_SPEED
+import lethalhabit.settings.GameRules.DASH_COOLDOWN
+import lethalhabit.settings.GameRules.DASH_STRENGTH
+import lethalhabit.settings.GameRules.JUMP_STRENGTH
+import lethalhabit.settings.GameRules.WALK_SPEED
 import lethalhabit.util.Point
 import java.awt.Image
 import java.awt.event.KeyEvent

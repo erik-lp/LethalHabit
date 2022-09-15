@@ -3,6 +3,7 @@ package lethalhabit.display
 import lethalhabit.game.Character
 import lethalhabit.game.CharacterController
 import lethalhabit.hitbox.Hitbox
+import lethalhabit.settings.GameRules.SHOW_HITBOXES
 import lethalhabit.util.Point
 import java.awt.Graphics
 import javax.swing.JPanel
@@ -15,12 +16,12 @@ object GamePanel : JPanel() {
         )
     )
     
-    private var showHitboxes = true
-    
     override fun paint(g: Graphics) {
         super.paint(g)
         g.drawImage(playerController.texture, playerController.position.x, playerController.position.y, ::imageUpdate)
-        g.drawPolygon(playerController.hitbox.points.map { it.x }.toIntArray(), playerController.hitbox.points.map { it.y }.toIntArray(), playerController.hitbox.points.size)
+        if (SHOW_HITBOXES) {
+            g.drawPolygon(playerController.hitbox.points.map { it.x }.toIntArray(), playerController.hitbox.points.map { it.y }.toIntArray(), playerController.hitbox.points.size)
+        }
     }
     
     override fun repaint() {
